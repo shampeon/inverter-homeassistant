@@ -61,6 +61,10 @@ int cInverter::GetMode() {
         case 'B': result = 4;   break;  // Battery
         case 'F': result = 5;   break;  // Fault
         case 'H': result = 6;   break;  // Power_Saving
+        case 'D': result = 7;   break;  // Shutdown
+        case 'C': result = 8;   break;  // Charge
+        case 'Y': result = 9;   break;  // Bypass
+        case 'E': result = 10;  break;  // Eco
         default:  result = 0;   break;  // Unknown
     }
 

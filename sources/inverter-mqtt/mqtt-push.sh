@@ -42,8 +42,11 @@ INVERTER_DATA=`timeout 10 /opt/inverter-cli/bin/inverter_poller -1`
 
 Inverter_mode=`echo $INVERTER_DATA | jq '.Inverter_mode' -r`
 
- # 1 = Power_On, 2 = Standby, 3 = Line, 4 = Battery, 5 = Fault, 6 = Power_Saving, 7 = Unknown
+ # 1 = Power_On, 2 = Standby, 3 = Line, 4 = Battery, 5 = Fault, 6 = Power_Saving, 
+ # 7 = Shutdown, 8 = Charge, 9 = Bypass, 10 = Eco
  case "$Inverter_mode" in
+   0)
+     inverter_mode_string="Unknown" ;;
    1)
      inverter_mode_string="Power_On" ;;
    2)
@@ -57,7 +60,13 @@ Inverter_mode=`echo $INVERTER_DATA | jq '.Inverter_mode' -r`
    6)
      inverter_mode_string="Power_Saving" ;;
    7)
-     inverter_mode_string="Unknown"
+     inverter_mode_string="Shutdown" ;;
+   8)
+     inverter_mode_string="Charge" ;;
+   9)
+     inverter_mode_string="Bypass" ;;
+   10)
+     inverter_mode_string="Eco"
  esac
 
 [ ! -z "$inverter_mode_string" ] && pushMQTTData "Inverter_mode" "$inverter_mode_string"
